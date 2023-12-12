@@ -1,19 +1,18 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const dbConnect = require('./config/dbConnect')
+
 const { registerUser } = require('./controllers/users/usersCtrl')
 const userRoute = require('./routes/users/usersRoute')
+const incomeRoute = require('./routes/income/incomeRoutes')
 const { errorHandler, notFound } = require('./middlewares/errorMiddleware')
+
 
 const app = express()
 //env
 dotenv.config()
 
-// const logger = (req, res, next ) => {
-//   console.log('logging');
-//   next()  
-// }
-// app.use(logger) 
+
 
 // db Connect
 dbConnect()
@@ -25,10 +24,16 @@ app.get('/', (req, res) => {
   res.json({ msg:"Welcome to Expense-Tracker API!!!"})
 })
 
+
  
 
-//routes
+//users routes
 app.use('/api/users', userRoute);
+
+
+//income routes
+app.use('/api/income', incomeRoute);
+
 
 
 //error
