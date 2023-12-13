@@ -23,18 +23,23 @@ const expenseSchema = mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId, //must be mongodb id
-      ref: "User",
+      ref: 'User',
       required: [true, 'User id is required'],
-    }
+    },
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
   },
 )
 
 //PAGINATION
 expenseSchema.plugin(mongoosePaginate)
 
-const Expense = mongoose.model("Expense", expenseSchema)
+const Expense = mongoose.model('Expense', expenseSchema)
 module.exports = Expense
-

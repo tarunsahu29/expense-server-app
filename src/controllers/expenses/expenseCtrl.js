@@ -16,7 +16,14 @@ const createExpCtrl = expressAsyncHandler(async (req, res) => {
 const fetchAllExpCtrl = expressAsyncHandler(async (req, res) => {
   const { page } = req?.query
   try {
-    const expense = await Expense.paginate({}, { limit: 10, page: Number(page) })
+    const expense = await Expense.paginate(
+      {},
+      {
+        limit: 10,
+        page: Number(page),
+        populate: 'user',
+      },
+    )
     res.json(expense)
   } catch (error) {
     res.json(error)
@@ -40,13 +47,17 @@ const updateExpCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req?.params
   const { title, amount, description } = req.body
   try {
-    const expense = await Expense.findByIdAndUpdate(id, {
-      title,
-      description,
-      amount
-    }, {
-      new: true
-    })
+    const expense = await Expense.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        amount,
+      },
+      {
+        new: true,
+      },
+    )
     res.json(expense)
   } catch (error) {
     res.json(error)
@@ -64,4 +75,10 @@ const deleteExpCtrl = expressAsyncHandler(async (req, res) => {
   }
 })
 
-module.exports = { createExpCtrl, fetchAllExpCtrl, fetchExpDetailsCtrl, updateExpCtrl, deleteExpCtrl }
+module.exports = {
+  createExpCtrl,
+  fetchAllExpCtrl,
+  fetchExpDetailsCtrl,
+  updateExpCtrl,
+  deleteExpCtrl,
+}
