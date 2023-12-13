@@ -14,8 +14,9 @@ const createIncCtrl = expressAsyncHandler(async (req, res) => {
 
 //fetch all income
 const fetchAllIncCtrl = expressAsyncHandler(async (req, res) => {
+  const { page } = req?.query
   try {
-    const income = await Income.find();
+    const income = await Income.paginate({}, { limit: 10, page: Number(page) })
     res.json(income)
   } catch (error) {
     res.json(error)
@@ -33,4 +34,34 @@ const fetchIncDetailsCtrl = expressAsyncHandler(async (req, res) => {
   }
 })
 
-module.exports = { createIncCtrl, fetchAllIncCtrl, fetchIncDetailsCtrl }
+//update Income
+
+const updateIncCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params
+  const { title, amount, description } = req.body
+  try {
+    const income = await Income.findByIdAndUpdate(id, {
+      title,
+      description,
+      amount
+    }, {
+      new: true
+    })
+    res.json(income)
+  } catch (error) {
+    res.json(error)
+  }
+})
+
+//delete
+const deleteIncCtrl = expressAsyncHandler(async (req, res) => {
+  const { id } = req?.params
+  try {
+    const income = await Income.findByIdAndDelete(id)
+    res.json(income)
+  } catch (error) {
+    res.json(error)
+  }
+})
+
+module.exports = { createIncCtrl, fetchAllIncCtrl, fetchIncDetailsCtrl, updateIncCtrl, deleteIncCtrl }

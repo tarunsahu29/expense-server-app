@@ -21,8 +21,9 @@ const registerUser = expressAsyncHandler(async (req, res) => {
 //FETCH ALL USERS
 
 const fetchUsersCtrl = expressAsyncHandler(async (req, res) => {
+  const { page } = req?.query
   try {
-    const users = await User.find({})
+    const users = await User.paginate({}, { limit: 2, page: Number(page) })
     res.json(users)
   } catch (error) {
     res.json(error)

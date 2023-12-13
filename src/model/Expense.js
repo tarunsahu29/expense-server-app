@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 //schema
-const incomeSchema = mongoose.Schema(
+const expenseSchema = mongoose.Schema(
   {
     title: {
       type: String,
@@ -15,7 +15,7 @@ const incomeSchema = mongoose.Schema(
     },
     type: {
       type: String,
-      default: 'income',
+      default: 'expense',
     },
     amount: {
       type: Number,
@@ -33,8 +33,8 @@ const incomeSchema = mongoose.Schema(
 )
 
 //PAGINATION
-incomeSchema.plugin(mongoosePaginate)
+expenseSchema.plugin(mongoosePaginate)
 
-const Income = mongoose.model("Income", incomeSchema)
-module.exports = Income
+const Expense = mongoose.model("Expense", expenseSchema)
+module.exports = Expense
 

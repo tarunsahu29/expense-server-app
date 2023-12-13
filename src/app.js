@@ -6,6 +6,7 @@ const { registerUser } = require('./controllers/users/usersCtrl')
 const userRoute = require('./routes/users/usersRoute')
 const incomeRoute = require('./routes/income/incomeRoutes')
 const { errorHandler, notFound } = require('./middlewares/errorMiddleware')
+const expenseRoute = require('./routes/expenses/expenseRoutes')
 
 
 const app = express()
@@ -34,6 +35,9 @@ app.use('/api/users', userRoute);
 //income routes
 app.use('/api/income', incomeRoute);
 
+
+//expense route
+app.use('/api/expense', expenseRoute);
 
 
 //error
